@@ -36,24 +36,26 @@
     self.senderId = self.user.login;
     self.senderDisplayName = self.user.fullName;
     
-    [[QBChat instance] connectWithUser: self.user completion:^(NSError * _Nullable error) {
-        if (error){
-            NSLog(@"Error chat connecting : %@", error.localizedDescription);
-        }
-    }];
     
+
     
-    
-    QBChatDialog* dialog = [[QBChatDialog alloc] initWithDialogID:@"5677ae4ea0eb47c5bb001663" type: QBChatDialogTypePublicGroup];
+    QBChatDialog* dialog = [[QBChatDialog alloc] initWithDialogID:@"5677ae4ea0eb47c5bb001663" type: QBChatDialogTypeGroup];
     QBChatMessage* m = [[QBChatMessage alloc] init];
+    m.text = @"QBChatMessage";
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"save_to_history"] = @YES;
+    [m setCustomParameters:params];
     
     [dialog joinWithCompletionBlock:^(NSError * _Nullable error) {
         NSLog(@"Error joining : %@", error.localizedDescription);
+        [dialog sendMessage: m completionBlock:^(NSError * _Nullable error) {
+            NSLog(@"Error sending message: %@", error.localizedDescription);
+        }];
     }];
-    m.text = @"QBChatMessage";
-    [dialog sendMessage: m completionBlock:^(NSError * _Nullable error) {
-        NSLog(@"Error sending message: %@", error.localizedDescription);
-    }];
+    
+    
+    
     
     JSQMessage* message = [JSQMessage messageWithSenderId: self.senderId displayName: self.senderDisplayName text: @"Test message"];
     JSQMessage* mes = [JSQMessage messageWithSenderId:@"1sender" displayName: @"sender 1" text: @"Hey"];

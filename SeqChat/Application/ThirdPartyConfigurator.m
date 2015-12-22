@@ -8,6 +8,7 @@
 
 #import "ThirdPartyConfigurator.h"
 #import <Quickblox/Quickblox.h>
+@class UIApplication;
 
 NSUInteger const QuickBloxAppID     = 32635;
 NSString* const QuickBloxAuthKey    = @"jSQJMQJSZWa2zsy";
@@ -25,6 +26,25 @@ NSString* const QuickBloxAccountKey = @"LxzLvuapqjstj7o7F6XE";
     [QBSettings setAuthKey: QuickBloxAuthKey];
     [QBSettings setAuthSecret: QuickBloxAuthSecret];
     [QBSettings setAccountKey: QuickBloxAccountKey];
+    
+    [QBSettings setAutoReconnectEnabled:YES];
+}
+
+#pragma mark - Application Events
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    [[QBChat instance] disconnectWithCompletionBlock: nil];
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    QBUUser* user = [[QBChat instance] currentUser];
+    if (user) {
+        [[QBChat instance] connectWithUser: user completion:nil];
+    }
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    [[QBChat instance] disconnectWithCompletionBlock: nil];
 }
 
 @end

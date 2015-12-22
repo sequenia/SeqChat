@@ -8,8 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@class UIApplication;
+
 @interface ThirdPartyConfigurator : NSObject
 
 - (void) configurate;
+
+#pragma mark - Application Events
+
+- (void)applicationDidEnterBackground:(UIApplication *)application;
+
+- (void)applicationWillEnterForeground:(UIApplication *)application;
+
+- (void)applicationWillTerminate:(UIApplication *)application;
 
 @end

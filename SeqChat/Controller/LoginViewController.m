@@ -69,7 +69,14 @@ NSString* const defaultPassword = @"defaultPassword";
     user.password = defaultPassword;
     [QBRequest logInWithUserLogin: user.login password: user.password successBlock:^(QBResponse * _Nonnull response, QBUUser * _Nullable _user) {
         NSLog(@"Login Successful. Response: %@", response);
-        [self gotoChatViewcontrollerWithUser: user];
+        [[QBChat instance] connectWithUser: user completion:^(NSError * _Nullable error) {
+            if (error){
+                NSLog(@"Error chat connecting : %@", error.localizedDescription);
+            } else {
+                [self gotoChatViewcontrollerWithUser: user];
+            }
+        }];
+        
     } errorBlock:^(QBResponse * _Nonnull response) {
         NSLog(@"Login Error. Response: %@", response);
     }];

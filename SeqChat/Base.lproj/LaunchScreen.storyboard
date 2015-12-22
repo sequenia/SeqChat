@@ -17,10 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGO_sequenia.png" translatesAutoresizingMaskIntoConstraints="NO" id="MFW-wm-nsz">
-                                <rect key="frame" x="0.0" y="20" width="320" height="30"/>
-                                <animations/>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sequenia_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="R7q-uf-lRH">
                                 <rect key="frame" x="40" y="193" width="240" height="182"/>
                                 <animations/>
@@ -33,18 +29,9 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="MFW-wm-nsz" secondAttribute="trailing" id="D2b-r5-9wx"/>
                             <constraint firstItem="R7q-uf-lRH" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="KTu-BZ-efG"/>
-                            <constraint firstItem="MFW-wm-nsz" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="W5a-ju-X1b"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="MFW-wm-nsz" secondAttribute="bottom" id="diy-T7-FOu"/>
-                            <constraint firstItem="MFW-wm-nsz" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="fu1-IN-GGS"/>
                             <constraint firstItem="R7q-uf-lRH" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="iD1-Ac-sqC"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="diy-T7-FOu"/>
-                            </mask>
-                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
@@ -54,7 +41,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LOGO_sequenia.png" width="117" height="30"/>
         <image name="sequenia_logo.png" width="239" height="339"/>
     </resources>
 </document>
