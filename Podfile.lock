@@ -2,15 +2,18 @@ PODS:
   - JSQMessagesViewController (7.2.0):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
+  - MBProgressHUD (0.9.1)
   - QuickBlox (2.6.1)
 
 DEPENDENCIES:
   - JSQMessagesViewController
+  - MBProgressHUD (~> 0.9.1)
   - QuickBlox
 
 SPEC CHECKSUMS:
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   QuickBlox: 870ae1b33cc4f0687b0fff6a29438a12f1c4f7d5
 
 COCOAPODS: 0.39.0

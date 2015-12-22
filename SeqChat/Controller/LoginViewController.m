@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "ChatViewController.h"
+#import <MBProgressHUD.h>
 
 #import <Quickblox/Quickblox.h>
 
@@ -67,9 +68,15 @@ NSString* const defaultPassword = @"defaultPassword";
 
 - (void) loginWithUser: (QBUUser*) user {
     user.password = defaultPassword;
+    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo: self.view animated: YES];
+    hud.labelText = @"Login";
     [QBRequest logInWithUserLogin: user.login password: user.password successBlock:^(QBResponse * _Nonnull response, QBUUser * _Nullable _user) {
         NSLog(@"Login Successful. Response: %@", response);
+        
+        // Connect
+        hud.labelText = @"Connecting";
         [[QBChat instance] connectWithUser: user completion:^(NSError * _Nullable error) {
+            [hud hide: YES];
             if (error){
                 NSLog(@"Error chat connecting : %@", error.localizedDescription);
             } else {
@@ -78,6 +85,7 @@ NSString* const defaultPassword = @"defaultPassword";
         }];
         
     } errorBlock:^(QBResponse * _Nonnull response) {
+        [hud hide: YES];
         NSLog(@"Login Error. Response: %@", response);
     }];
 }

@@ -17,6 +17,7 @@
 		083DB11D1C27B6660043B214 /* sequenia_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 083DB11B1C27B6660043B214 /* sequenia_logo@2x.png */; };
 		083DB1201C27B8BE0043B214 /* ThirdPartyConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 083DB11F1C27B8BE0043B214 /* ThirdPartyConfigurator.m */; };
 		083DB1241C27CC3F0043B214 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083DB1231C27CC3F0043B214 /* LoginViewController.m */; };
+		08E1B0E31C29268400C73CED /* NSArray+HOM.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E1B0E21C29268400C73CED /* NSArray+HOM.m */; };
 		DEB349D4818B79B56180E83A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E04307D8A3F24F89939794 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,8 @@
 		083DB11F1C27B8BE0043B214 /* ThirdPartyConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdPartyConfigurator.m; sourceTree = "<group>"; };
 		083DB1221C27CC3F0043B214 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		083DB1231C27CC3F0043B214 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		08E1B0E11C29268400C73CED /* NSArray+HOM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+HOM.h"; sourceTree = "<group>"; };
+		08E1B0E21C29268400C73CED /* NSArray+HOM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+HOM.m"; sourceTree = "<group>"; };
 		AFAB1D136A11F81084882341 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C15E8A7E19EB03B3E5D88820 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D1E04307D8A3F24F89939794 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +78,7 @@
 		083DB0FE1C27AFC20043B214 /* SeqChat */ = {
 			isa = PBXGroup;
 			children = (
+				08E1B0DF1C2925DA00C73CED /* Common */,
 				083DB1211C27CC2E0043B214 /* Controller */,
 				083DB1191C27B5CD0043B214 /* Application */,
 				083DB1181C27B5AE0043B214 /* View */,
@@ -140,6 +144,23 @@
 				083DB1061C27AFC20043B214 /* ChatViewController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		08E1B0DF1C2925DA00C73CED /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				08E1B0E01C2925F200C73CED /* Category */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		08E1B0E01C2925F200C73CED /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				08E1B0E11C29268400C73CED /* NSArray+HOM.h */,
+				08E1B0E21C29268400C73CED /* NSArray+HOM.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		73F3F2D29AFC34E319DFE038 /* Frameworks */ = {
@@ -285,6 +306,7 @@
 				083DB1071C27AFC20043B214 /* ChatViewController.m in Sources */,
 				083DB1201C27B8BE0043B214 /* ThirdPartyConfigurator.m in Sources */,
 				083DB1041C27AFC20043B214 /* AppDelegate.m in Sources */,
+				08E1B0E31C29268400C73CED /* NSArray+HOM.m in Sources */,
 				083DB1011C27AFC20043B214 /* main.m in Sources */,
 				083DB1241C27CC3F0043B214 /* LoginViewController.m in Sources */,
 			);
