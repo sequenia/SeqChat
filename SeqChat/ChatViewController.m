@@ -8,6 +8,8 @@
 
 #import "ChatViewController.h"
 #import <JSQSystemSoundPlayer.h>
+#import <MBProgressHUD.h>
+#import "NSArray+HOM.h"
 
 @interface ChatViewController () 
 
@@ -33,37 +35,60 @@
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
     
-    self.senderId = self.user.login;
+    self.senderId = [NSString stringWithFormat:@"%ld", self.user.ID];
     self.senderDisplayName = self.user.fullName;
     
-    
-
-    
     QBChatDialog* dialog = [[QBChatDialog alloc] initWithDialogID:@"5677ae4ea0eb47c5bb001663" type: QBChatDialogTypeGroup];
-    QBChatMessage* m = [[QBChatMessage alloc] init];
-    m.text = @"QBChatMessage";
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"save_to_history"] = @YES;
-    [m setCustomParameters:params];
-    
+    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo: self.view animated: YES];
+    hud.labelText = @"Joining to chat";
+    __weak typeof(self) welf = self;
     [dialog joinWithCompletionBlock:^(NSError * _Nullable error) {
-        NSLog(@"Error joining : %@", error.localizedDescription);
-        [dialog sendMessage: m completionBlock:^(NSError * _Nullable error) {
-            NSLog(@"Error sending message: %@", error.localizedDescription);
-        }];
+        [hud hide:YES];
+        if (error){
+            NSLog(@"Error joining : %@", error.localizedDescription);
+        } else {
+            [welf loadMessagesFromDialog: dialog];
+        }
     }];
     
+//    QBChatMessage* m = [[QBChatMessage alloc] init];
+//    m.text = @"QBChatMessage";
+//    
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    params[@"save_to_history"] = @YES;
+//    [m setCustomParameters:params];
+//    
+//    [dialog sendMessage: m completionBlock:^(NSError * _Nullable error) {
+//        NSLog(@"Error sending message: %@", error.localizedDescription);
+//    }];
     
-    
-    
-    JSQMessage* message = [JSQMessage messageWithSenderId: self.senderId displayName: self.senderDisplayName text: @"Test message"];
-    JSQMessage* mes = [JSQMessage messageWithSenderId:@"1sender" displayName: @"sender 1" text: @"Hey"];
-    [self.messages addObject: mes];
-    [self.messages addObject: message];
+//    JSQMessage* message = [JSQMessage messageWithSenderId: self.senderId displayName: self.senderDisplayName text: @"Test message"];
+//    JSQMessage* mes = [JSQMessage messageWithSenderId:@"1sender" displayName: @"sender 1" text: @"Hey"];
+//    [self.messages addObject: mes];
+//    [self.messages addObject: message];
     
     // Do any additional setup after loading the view, typically from a nib.
     
+}
+
+- (void) loadMessagesFromDialog: (QBChatDialog*) dialog {
+    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo: self.view animated: YES];
+    hud.labelText = @"Loading history";
+    [QBRequest messagesWithDialogID: dialog.ID successBlock:^(QBResponse * _Nonnull response, NSArray<QBChatMessage *> * _Nullable messages) {
+        
+        NSArray* mappedMessages = [messages map:^id(id obj) {
+            QBChatMessage* oldMessage = (QBChatMessage*) obj;
+            return [JSQMessage messageWithSenderId: [NSString stringWithFormat:@"%ld", oldMessage.senderID]
+                                       displayName: oldMessage.senderNick ?: @"Nil"
+                                              text: oldMessage.text];
+        }];
+        self.messages = [NSMutableArray arrayWithArray:mappedMessages];
+        [self.collectionView reloadData];
+        [hud hide: YES];
+    } errorBlock:^(QBResponse * _Nonnull response) {
+        NSLog(@"Error loading messages. Response: %@", response);
+        [hud hide:YES];
+    }];
 }
 
 #pragma mark - JSQMessagesViewController method overrides
@@ -109,7 +134,7 @@
         return [self.bubleFactory outgoingMessagesBubbleImageWithColor: [UIColor greenColor]];
     }
     
-    return [self.bubleFactory outgoingMessagesBubbleImageWithColor: [UIColor grayColor]];
+    return [self.bubleFactory incomingMessagesBubbleImageWithColor: [UIColor grayColor]];
 }
 
 - (void)didPressSendButton:(UIButton *)button

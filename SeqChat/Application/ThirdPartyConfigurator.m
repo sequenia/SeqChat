@@ -8,6 +8,7 @@
 
 #import "ThirdPartyConfigurator.h"
 #import <Quickblox/Quickblox.h>
+
 @class UIApplication;
 
 NSUInteger const QuickBloxAppID     = 32635;
@@ -28,6 +29,7 @@ NSString* const QuickBloxAccountKey = @"LxzLvuapqjstj7o7F6XE";
     [QBSettings setAccountKey: QuickBloxAccountKey];
     
     [QBSettings setAutoReconnectEnabled:YES];
+    [QBLogger setCurrentLevel: QBLogLevelDebug];
 }
 
 #pragma mark - Application Events
