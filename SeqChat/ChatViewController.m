@@ -131,7 +131,7 @@
     JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
-        return [self.bubleFactory outgoingMessagesBubbleImageWithColor: [UIColor greenColor]];
+        return [self.bubleFactory incomingMessagesBubbleImageWithColor: [UIColor greenColor]];
     }
     
     return [self.bubleFactory incomingMessagesBubbleImageWithColor: [UIColor grayColor]];
