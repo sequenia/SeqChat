@@ -9,13 +9,15 @@
 #import "ChatViewController.h"
 #import <JSQSystemSoundPlayer.h>
 #import <MBProgressHUD.h>
-#import "NSArray+HOM.h"
+#import "Categories.h"
 
 @interface ChatViewController () 
 
 @property (strong, nonatomic) NSMutableArray* messages;
 
 @property (strong, nonatomic) JSQMessagesBubbleImageFactory* bubleFactory;
+
+@property (strong, nonatomic) QBChatDialog* dialog;
 
 @end
 
@@ -35,7 +37,7 @@
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
     
-    self.senderId = [NSString stringWithFormat:@"%ld", self.user.ID];
+    self.senderId = self.user.stringID;
     self.senderDisplayName = self.user.fullName;
     
     QBChatDialog* dialog = [[QBChatDialog alloc] initWithDialogID:@"5677ae4ea0eb47c5bb001663" type: QBChatDialogTypeGroup];
@@ -50,25 +52,7 @@
             [welf loadMessagesFromDialog: dialog];
         }
     }];
-    
-//    QBChatMessage* m = [[QBChatMessage alloc] init];
-//    m.text = @"QBChatMessage";
-//    
-//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//    params[@"save_to_history"] = @YES;
-//    [m setCustomParameters:params];
-//    
-//    [dialog sendMessage: m completionBlock:^(NSError * _Nullable error) {
-//        NSLog(@"Error sending message: %@", error.localizedDescription);
-//    }];
-    
-//    JSQMessage* message = [JSQMessage messageWithSenderId: self.senderId displayName: self.senderDisplayName text: @"Test message"];
-//    JSQMessage* mes = [JSQMessage messageWithSenderId:@"1sender" displayName: @"sender 1" text: @"Hey"];
-//    [self.messages addObject: mes];
-//    [self.messages addObject: message];
-    
-    // Do any additional setup after loading the view, typically from a nib.
-    
+    self.dialog = dialog;
 }
 
 - (void) loadMessagesFromDialog: (QBChatDialog*) dialog {
@@ -78,9 +62,7 @@
         
         NSArray* mappedMessages = [messages map:^id(id obj) {
             QBChatMessage* oldMessage = (QBChatMessage*) obj;
-            return [JSQMessage messageWithSenderId: [NSString stringWithFormat:@"%ld", oldMessage.senderID]
-                                       displayName: oldMessage.senderNick ?: @"Nil"
-                                              text: oldMessage.text];
+            return [self modelMessageToPresentMessage: oldMessage];
         }];
         self.messages = [NSMutableArray arrayWithArray:mappedMessages];
         [self.collectionView reloadData];
@@ -89,6 +71,13 @@
         NSLog(@"Error loading messages. Response: %@", response);
         [hud hide:YES];
     }];
+}
+
+- (JSQMessage*) modelMessageToPresentMessage: (QBChatMessage*) message {
+    return [[JSQMessage alloc] initWithSenderId: message.stringSenderID
+                              senderDisplayName: message.senderNick ?: @"Nil"
+                                           date: message.dateSent
+                                           text: message.text];
 }
 
 #pragma mark - JSQMessagesViewController method overrides
@@ -152,14 +141,30 @@
      */
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
-    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
-                                             senderDisplayName:senderDisplayName
-                                                          date:date
-                                                          text:text];
+    QBChatMessage* message = [QBChatMessage message];
+    message.senderID = [self.senderId integerValue];
+    message.senderNick = senderDisplayName;
+    message.text = text;
+    message.dateSent = date;
     
-    [self.messages addObject:message];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"save_to_history"] = @YES;
+    [message setCustomParameters:params];
     
-    [self finishSendingMessageAnimated:YES];
+    
+    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated: YES];
+    hud.labelText = @"Sending...";
+    __weak typeof(self) welf = self;
+    [self.dialog sendMessage: message completionBlock:^(NSError * _Nullable error) {
+        [hud hide: YES];
+        if (error){
+            NSLog(@"Error sending message: %@", error.localizedDescription);
+        } else {
+            [welf.messages addObject: [self modelMessageToPresentMessage: message]];
+            [welf finishSendingMessageAnimated:YES];
+        }
+    }];
+
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender
