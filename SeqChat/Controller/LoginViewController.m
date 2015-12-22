@@ -27,10 +27,14 @@ NSString* const defaultPassword = @"defaultPassword";
 #pragma mark - Load data
 
 - (void) loadUsers {
+    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo: self.view animated: YES];
+    hud.labelText = @"Loading users";
     [QBRequest usersWithSuccessBlock:^(QBResponse * _Nonnull response, QBGeneralResponsePage * _Nullable page, NSArray<QBUUser *> * _Nullable users) {
+        [hud hide: YES];
         self.dataSource = users;
         [self.tableView reloadData];
     } errorBlock:^(QBResponse * _Nonnull response) {
+        [hud hide: YES];
         NSLog(@"Error fetching users. Response: %@", response);
     }];
 }
@@ -39,7 +43,7 @@ NSString* const defaultPassword = @"defaultPassword";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadUsers];
+    
     UITableView* tableView = [[UITableView alloc] initWithFrame: self.view.bounds style: UITableViewStylePlain];
     [self.view addSubview: tableView];
     tableView.tableFooterView = [UIView new];
@@ -47,6 +51,11 @@ NSString* const defaultPassword = @"defaultPassword";
     tableView.dataSource = self;
     
     self.tableView = tableView;
+    [self loadUsers];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     CGRect titleFrame = CGRectMake(0, 0, 200.0, 35.0);
     UIImageView* titleImageView = [[UIImageView alloc] initWithFrame: titleFrame];
@@ -67,6 +76,7 @@ NSString* const defaultPassword = @"defaultPassword";
 }
 
 - (void) loginWithUser: (QBUUser*) user {
+
     user.password = defaultPassword;
     MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo: self.view animated: YES];
     hud.labelText = @"Login";
@@ -75,6 +85,12 @@ NSString* const defaultPassword = @"defaultPassword";
         
         // Connect
         hud.labelText = @"Connecting";
+        if ([[QBChat instance] isConnected]) {
+            [hud hide:YES];
+            [self gotoChatViewcontrollerWithUser: user];
+            return;
+        }
+        
         [[QBChat instance] connectWithUser: user completion:^(NSError * _Nullable error) {
             [hud hide: YES];
             if (error){
@@ -107,7 +123,9 @@ NSString* const defaultPassword = @"defaultPassword";
 
 - (void) gotoChatViewcontrollerWithUser: (QBUUser*) user {
     ChatViewController* chatVC = [[ChatViewController alloc] initWithUser: user];
-    [self.navigationController pushViewController: chatVC animated: YES];
+    UINavigationController* navigationVC = [[UINavigationController alloc] initWithRootViewController: chatVC];
+    chatVC.navigationItem.titleView = self.navigationItem.titleView;
+    [self presentViewController: navigationVC animated: YES completion: nil];
 }
 
 @end

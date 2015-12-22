@@ -11,7 +11,7 @@
 #import <MBProgressHUD.h>
 #import "Categories.h"
 
-@interface ChatViewController () 
+@interface ChatViewController () <QBChatDelegate>
 
 @property (strong, nonatomic) NSMutableArray* messages;
 
@@ -32,6 +32,8 @@
     return self;
 }
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
@@ -40,6 +42,13 @@
     self.senderId = self.user.stringID;
     self.senderDisplayName = self.user.fullName;
     
+    [self joinToChatAndLoadMessages];
+
+    UIBarButtonItem* logoutButton = [[UIBarButtonItem alloc] initWithTitle: @"Log out" style: UIBarButtonItemStylePlain target: self action:@selector(logout)];
+    self.navigationItem.leftBarButtonItem = logoutButton;
+}
+
+- (void) joinToChatAndLoadMessages {
     QBChatDialog* dialog = [[QBChatDialog alloc] initWithDialogID:@"5677ae4ea0eb47c5bb001663" type: QBChatDialogTypeGroup];
     MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo: self.view animated: YES];
     hud.labelText = @"Joining to chat";
@@ -53,6 +62,36 @@
         }
     }];
     self.dialog = dialog;
+}
+
+- (void) logout {
+    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo: self.view animated: YES];
+    hud.labelText = @"Log out...";
+    [QBRequest logOutWithSuccessBlock:^(QBResponse * _Nonnull response) {
+        [hud hide: YES];
+        [self dismissViewControllerAnimated: YES completion: nil];
+        NSLog(@"Successful logout");
+    } errorBlock:^(QBResponse * _Nonnull response) {
+        [hud hide: YES];
+        NSLog(@"Logout failed");
+    }];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear: animated];
+    
+    [[QBChat instance] addDelegate: self];
+    
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[QBChat instance] removeDelegate: self];
+}
+
+- (void) dealloc {
+    [self.dialog leaveWithCompletionBlock:nil];
 }
 
 - (void) loadMessagesFromDialog: (QBChatDialog*) dialog {
@@ -78,6 +117,22 @@
                               senderDisplayName: message.senderNick ?: @"Nil"
                                            date: message.dateSent
                                            text: message.text];
+}
+
+#pragma mark - QBChatDelegate
+
+- (void)chatRoomDidReceiveMessage:(QBChatMessage *)message fromDialogId:(NSString *)dialogId{
+    if ([dialogId isEqualToString: self.dialog.ID]){
+        [self scrollToBottomAnimated:YES];
+        
+        [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+        [self.messages addObject: [self modelMessageToPresentMessage: message]];
+        [self finishReceivingMessageAnimated:YES];
+    }
+}
+
+- (void)chatDidReceiveMessage:(QB_NONNULL QBChatMessage *)message{
+
 }
 
 #pragma mark - JSQMessagesViewController method overrides
@@ -120,10 +175,10 @@
     JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
-        return [self.bubleFactory incomingMessagesBubbleImageWithColor: [UIColor greenColor]];
+        return [self.bubleFactory outgoingMessagesBubbleImageWithColor: [UIColor lightGrayColor]];
     }
     
-    return [self.bubleFactory incomingMessagesBubbleImageWithColor: [UIColor grayColor]];
+    return [self.bubleFactory incomingMessagesBubbleImageWithColor: [UIColor purpleColor]];
 }
 
 - (void)didPressSendButton:(UIButton *)button
