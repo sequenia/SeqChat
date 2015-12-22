@@ -9,23 +9,37 @@
 /* Begin PBXBuildFile section */
 		083DB1011C27AFC20043B214 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 083DB1001C27AFC20043B214 /* main.m */; };
 		083DB1041C27AFC20043B214 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 083DB1031C27AFC20043B214 /* AppDelegate.m */; };
-		083DB1071C27AFC20043B214 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083DB1061C27AFC20043B214 /* ViewController.m */; };
+		083DB1071C27AFC20043B214 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083DB1061C27AFC20043B214 /* ChatViewController.m */; };
 		083DB10A1C27AFC20043B214 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 083DB1081C27AFC20043B214 /* Main.storyboard */; };
 		083DB10C1C27AFC30043B214 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 083DB10B1C27AFC30043B214 /* Assets.xcassets */; };
 		083DB10F1C27AFC30043B214 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 083DB10D1C27AFC30043B214 /* LaunchScreen.storyboard */; };
+		083DB11C1C27B6660043B214 /* LOGO_sequenia@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 083DB11A1C27B6660043B214 /* LOGO_sequenia@2x.png */; };
+		083DB11D1C27B6660043B214 /* sequenia_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 083DB11B1C27B6660043B214 /* sequenia_logo@2x.png */; };
+		083DB1201C27B8BE0043B214 /* ThirdPartyConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 083DB11F1C27B8BE0043B214 /* ThirdPartyConfigurator.m */; };
+		083DB1241C27CC3F0043B214 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083DB1231C27CC3F0043B214 /* LoginViewController.m */; };
+		DEB349D4818B79B56180E83A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E04307D8A3F24F89939794 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		083DB0FC1C27AFC20043B214 /* SeqChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeqChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		083DB1001C27AFC20043B214 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		083DB1021C27AFC20043B214 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		083DB1031C27AFC20043B214 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		083DB1051C27AFC20043B214 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		083DB1061C27AFC20043B214 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		083DB1021C27AFC20043B214 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../AppDelegate.h; sourceTree = "<group>"; };
+		083DB1031C27AFC20043B214 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ../AppDelegate.m; sourceTree = "<group>"; };
+		083DB1051C27AFC20043B214 /* ChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChatViewController.h; path = ../ChatViewController.h; sourceTree = "<group>"; };
+		083DB1061C27AFC20043B214 /* ChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ChatViewController.m; path = ../ChatViewController.m; sourceTree = "<group>"; };
 		083DB1091C27AFC20043B214 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		083DB10B1C27AFC30043B214 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		083DB10B1C27AFC30043B214 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		083DB10E1C27AFC30043B214 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		083DB1101C27AFC30043B214 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		083DB11A1C27B6660043B214 /* LOGO_sequenia@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LOGO_sequenia@2x.png"; sourceTree = "<group>"; };
+		083DB11B1C27B6660043B214 /* sequenia_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sequenia_logo@2x.png"; sourceTree = "<group>"; };
+		083DB11E1C27B8BE0043B214 /* ThirdPartyConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdPartyConfigurator.h; sourceTree = "<group>"; };
+		083DB11F1C27B8BE0043B214 /* ThirdPartyConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdPartyConfigurator.m; sourceTree = "<group>"; };
+		083DB1221C27CC3F0043B214 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		083DB1231C27CC3F0043B214 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		AFAB1D136A11F81084882341 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C15E8A7E19EB03B3E5D88820 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		D1E04307D8A3F24F89939794 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEB349D4818B79B56180E83A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +59,8 @@
 			children = (
 				083DB0FE1C27AFC20043B214 /* SeqChat */,
 				083DB0FD1C27AFC20043B214 /* Products */,
+				EE2DD7357B23612C6F356FCC /* Pods */,
+				73F3F2D29AFC34E319DFE038 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,14 +75,10 @@
 		083DB0FE1C27AFC20043B214 /* SeqChat */ = {
 			isa = PBXGroup;
 			children = (
-				083DB1021C27AFC20043B214 /* AppDelegate.h */,
-				083DB1031C27AFC20043B214 /* AppDelegate.m */,
-				083DB1051C27AFC20043B214 /* ViewController.h */,
-				083DB1061C27AFC20043B214 /* ViewController.m */,
-				083DB1081C27AFC20043B214 /* Main.storyboard */,
-				083DB10B1C27AFC30043B214 /* Assets.xcassets */,
-				083DB10D1C27AFC30043B214 /* LaunchScreen.storyboard */,
-				083DB1101C27AFC30043B214 /* Info.plist */,
+				083DB1211C27CC2E0043B214 /* Controller */,
+				083DB1191C27B5CD0043B214 /* Application */,
+				083DB1181C27B5AE0043B214 /* View */,
+				083DB1161C27B53B0043B214 /* Resources */,
 				083DB0FF1C27AFC20043B214 /* Supporting Files */,
 			);
 			path = SeqChat;
@@ -74,9 +87,76 @@
 		083DB0FF1C27AFC20043B214 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				083DB1101C27AFC30043B214 /* Info.plist */,
 				083DB1001C27AFC20043B214 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		083DB1161C27B53B0043B214 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				083DB1171C27B5510043B214 /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		083DB1171C27B5510043B214 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				083DB11A1C27B6660043B214 /* LOGO_sequenia@2x.png */,
+				083DB11B1C27B6660043B214 /* sequenia_logo@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		083DB1181C27B5AE0043B214 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				083DB1081C27AFC20043B214 /* Main.storyboard */,
+				083DB10B1C27AFC30043B214 /* Assets.xcassets */,
+				083DB10D1C27AFC30043B214 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		083DB1191C27B5CD0043B214 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				083DB1021C27AFC20043B214 /* AppDelegate.h */,
+				083DB1031C27AFC20043B214 /* AppDelegate.m */,
+				083DB11E1C27B8BE0043B214 /* ThirdPartyConfigurator.h */,
+				083DB11F1C27B8BE0043B214 /* ThirdPartyConfigurator.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		083DB1211C27CC2E0043B214 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				083DB1221C27CC3F0043B214 /* LoginViewController.h */,
+				083DB1231C27CC3F0043B214 /* LoginViewController.m */,
+				083DB1051C27AFC20043B214 /* ChatViewController.h */,
+				083DB1061C27AFC20043B214 /* ChatViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		73F3F2D29AFC34E319DFE038 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D1E04307D8A3F24F89939794 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EE2DD7357B23612C6F356FCC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C15E8A7E19EB03B3E5D88820 /* Pods.debug.xcconfig */,
+				AFAB1D136A11F81084882341 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,9 +166,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 083DB1131C27AFC30043B214 /* Build configuration list for PBXNativeTarget "SeqChat" */;
 			buildPhases = (
+				E01954518A621AF141E095CF /* Check Pods Manifest.lock */,
 				083DB0F81C27AFC20043B214 /* Sources */,
 				083DB0F91C27AFC20043B214 /* Frameworks */,
 				083DB0FA1C27AFC20043B214 /* Resources */,
+				3D66C4CDFC22B936CA12E17B /* Embed Pods Frameworks */,
+				35B45969C60C289DBC41F16D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -138,20 +221,72 @@
 			files = (
 				083DB10F1C27AFC30043B214 /* LaunchScreen.storyboard in Resources */,
 				083DB10C1C27AFC30043B214 /* Assets.xcassets in Resources */,
+				083DB11D1C27B6660043B214 /* sequenia_logo@2x.png in Resources */,
 				083DB10A1C27AFC20043B214 /* Main.storyboard in Resources */,
+				083DB11C1C27B6660043B214 /* LOGO_sequenia@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35B45969C60C289DBC41F16D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3D66C4CDFC22B936CA12E17B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E01954518A621AF141E095CF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		083DB0F81C27AFC20043B214 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				083DB1071C27AFC20043B214 /* ViewController.m in Sources */,
+				083DB1071C27AFC20043B214 /* ChatViewController.m in Sources */,
+				083DB1201C27B8BE0043B214 /* ThirdPartyConfigurator.m in Sources */,
 				083DB1041C27AFC20043B214 /* AppDelegate.m in Sources */,
 				083DB1011C27AFC20043B214 /* main.m in Sources */,
+				083DB1241C27CC3F0043B214 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +299,7 @@
 				083DB1091C27AFC20043B214 /* Base */,
 			);
 			name = Main.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		083DB10D1C27AFC30043B214 /* LaunchScreen.storyboard */ = {
@@ -172,6 +308,7 @@
 				083DB10E1C27AFC30043B214 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -259,9 +396,11 @@
 		};
 		083DB1141C27AFC30043B214 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C15E8A7E19EB03B3E5D88820 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SeqChat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sequenia.seqchat.SeqChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -270,9 +409,11 @@
 		};
 		083DB1151C27AFC30043B214 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AFAB1D136A11F81084882341 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SeqChat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sequenia.seqchat.SeqChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -298,6 +439,7 @@
 				083DB1151C27AFC30043B214 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

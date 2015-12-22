@@ -7,8 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "ThirdPartyConfigurator.h"
+#import "LoginViewController.h"
 
 @interface AppDelegate ()
+
+@property (strong, nonatomic) ThirdPartyConfigurator* thirdPartyConfigurator;
 
 @end
 
@@ -17,6 +21,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.thirdPartyConfigurator = [[ThirdPartyConfigurator alloc] init];
+    [self.thirdPartyConfigurator configurate];
+    
+    
+    UIViewController* firstViewcontroller = [[LoginViewController alloc] init];
+    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController: firstViewcontroller];
+    self.window.rootViewController = navigationController;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
