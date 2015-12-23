@@ -11,9 +11,19 @@
 #import <MBProgressHUD.h>
 #import "Categories.h"
 
+NSString* const kDisplayedName = @"kDisplayedName";
+
+NSString* const seqID   = @"7742063";
+NSString* const denisID = @"7744596";
+NSString* const nickID  = @"7744975";
+
+CGFloat const topLabelHeight = 20.0;
+
 @interface ChatViewController () <QBChatDelegate>
 
 @property (strong, nonatomic) NSMutableArray* messages;
+
+@property (strong, nonatomic) NSDictionary* avatars;
 
 @property (strong, nonatomic) JSQMessagesBubbleImageFactory* bubleFactory;
 
@@ -28,6 +38,7 @@
         _user = user;
         _messages = [NSMutableArray array];
         _bubleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
+        [self setupAvatars];
     }
     return self;
 }
@@ -36,17 +47,60 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
-    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
+    [self configureAppeareance];
     
     self.senderId = self.user.stringID;
     self.senderDisplayName = self.user.fullName;
     
     [self joinToChatAndLoadMessages];
+}
 
-    UIBarButtonItem* logoutButton = [[UIBarButtonItem alloc] initWithTitle: @"Log out" style: UIBarButtonItemStylePlain target: self action:@selector(logout)];
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear: animated];
+    
+    [[QBChat instance] addDelegate: self];
+    
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[QBChat instance] removeDelegate: self];
+}
+
+- (void) dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+}
+
+#pragma mark - Preparation
+
+- (void) setupAvatars {
+    UIImage* seqImage = [self circularImageFromImage: [UIImage imageNamed: @"sequenia_logo"]];
+    UIImage* denisImage = [self circularImageFromImage: [UIImage imageNamed: @"denis.gif"]];
+    UIImage* nickImage = [self circularImageFromImage: [UIImage imageNamed:@"nick.gif"]];
+    JSQMessagesAvatarImage* denisAvatar = [JSQMessagesAvatarImage avatarWithImage: denisImage];
+    JSQMessagesAvatarImage* nickAvatar = [JSQMessagesAvatarImage avatarWithImage: nickImage];
+    JSQMessagesAvatarImage* seqAvatar = [JSQMessagesAvatarImage avatarWithImage: seqImage];
+    self.avatars = @{seqID  : seqAvatar,
+                     denisID: denisAvatar,
+                     nickID : nickAvatar};
+}
+
+- (void) configureAppeareance {
+    self.view.backgroundColor = [UIColor colorWithPatternImage: [UIImage imageNamed:@"bg_pattern"]];
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    
+    UIImage* closeBtmImage = [[UIImage imageNamed:@"close40"] imageWithRenderingMode: UIImageRenderingModeAlwaysOriginal];
+    UIImageView* closeImageView = [[UIImageView alloc] initWithImage: closeBtmImage];
+    closeImageView.userInteractionEnabled = YES;
+    [closeImageView addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(logout)]];
+    closeImageView.frame = CGRectMake(0, 0, 25.0, 25.0);
+    UIBarButtonItem* logoutButton = [[UIBarButtonItem alloc] initWithCustomView: closeImageView];
     self.navigationItem.leftBarButtonItem = logoutButton;
 }
+
+#pragma mark - Requests
 
 - (void) joinToChatAndLoadMessages {
     QBChatDialog* dialog = [[QBChatDialog alloc] initWithDialogID:@"5677ae4ea0eb47c5bb001663" type: QBChatDialogTypeGroup];
@@ -67,31 +121,17 @@
 - (void) logout {
     MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo: self.view animated: YES];
     hud.labelText = @"Log out...";
-    [QBRequest logOutWithSuccessBlock:^(QBResponse * _Nonnull response) {
-        [hud hide: YES];
-        [self dismissViewControllerAnimated: YES completion: nil];
-        NSLog(@"Successful logout");
-    } errorBlock:^(QBResponse * _Nonnull response) {
-        [hud hide: YES];
-        NSLog(@"Logout failed");
+    [[QBChat instance] disconnectWithCompletionBlock:^(NSError * _Nullable error) {
+        [QBRequest logOutWithSuccessBlock:^(QBResponse * _Nonnull response) {
+            [hud hide: YES];
+            [self dismissViewControllerAnimated: YES completion: nil];
+            NSLog(@"Successful logout");
+        } errorBlock:^(QBResponse * _Nonnull response) {
+            [hud hide: YES];
+            NSLog(@"Logout failed");
+        }];
     }];
-}
-
-- (void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear: animated];
     
-    [[QBChat instance] addDelegate: self];
-    
-}
-
-- (void) viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [[QBChat instance] removeDelegate: self];
-}
-
-- (void) dealloc {
-    [self.dialog leaveWithCompletionBlock:nil];
 }
 
 - (void) loadMessagesFromDialog: (QBChatDialog*) dialog {
@@ -106,23 +146,33 @@
         self.messages = [NSMutableArray arrayWithArray:mappedMessages];
         [self.collectionView reloadData];
         [hud hide: YES];
+        [self scrollToBottomAnimated: YES];
     } errorBlock:^(QBResponse * _Nonnull response) {
         NSLog(@"Error loading messages. Response: %@", response);
         [hud hide:YES];
     }];
 }
 
+
+#pragma mark - Mapping
+
 - (JSQMessage*) modelMessageToPresentMessage: (QBChatMessage*) message {
+    NSString* displayedName = [message customParameters][kDisplayedName];
     return [[JSQMessage alloc] initWithSenderId: message.stringSenderID
-                              senderDisplayName: message.senderNick ?: @"Nil"
+                              senderDisplayName: displayedName
                                            date: message.dateSent
                                            text: message.text];
 }
 
 #pragma mark - QBChatDelegate
 
-- (void)chatRoomDidReceiveMessage:(QBChatMessage *)message fromDialogId:(NSString *)dialogId{
-    if ([dialogId isEqualToString: self.dialog.ID]){
+- (void)chatRoomDidReceiveMessage:(QBChatMessage *)message fromDialogID:(NSString *)dialogID{
+    if ([dialogID isEqualToString: self.dialog.ID]){
+        
+        if ([message.stringSenderID isEqualToString: self.senderId]){
+            return;
+        }
+        
         [self scrollToBottomAnimated:YES];
         
         [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
@@ -131,69 +181,36 @@
     }
 }
 
-- (void)chatDidReceiveMessage:(QB_NONNULL QBChatMessage *)message{
-
+- (void)chatDidConnect {
+    [self joinToChatAndLoadMessages];
 }
 
-#pragma mark - JSQMessagesViewController method overrides
+#pragma mark - JSQMessagesCollectionViewDelegateFlowLayout
 
-- (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    /**
-     *  Return `nil` here if you do not want avatars.
-     *  If you do return `nil`, be sure to do the following in `viewDidLoad`:
-     *
-     *  self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
-     *  self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
-     *
-     *  It is possible to have only outgoing avatars or only incoming avatars, too.
-     */
-    
-    /**
-     *  Return your previously created avatar image data objects.
-     *
-     *  Note: these the avatars will be sized according to these values:
-     *
-     *  self.collectionView.collectionViewLayout.incomingAvatarViewSize
-     *  self.collectionView.collectionViewLayout.outgoingAvatarViewSize
-     *
-     *  Override the defaults in `viewDidLoad`
-     */
-    return nil;
-}
-
-
-- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    /**
-     *  You may return nil here if you do not want bubbles.
-     *  In this case, you should set the background color of your collection view cell's textView.
-     *
-     *  Otherwise, return your previously created bubble image data objects.
-     */
-    
-    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
-    
-    if ([message.senderId isEqualToString:self.senderId]) {
-        return [self.bubleFactory outgoingMessagesBubbleImageWithColor: [UIColor lightGrayColor]];
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout
+heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath{
+    JSQMessage *currentMessage = [self.messages objectAtIndex:indexPath.item];
+    if ([[currentMessage senderId] isEqualToString:self.senderId]) {
+        return 0.0f;
     }
-    
-    return [self.bubleFactory incomingMessagesBubbleImageWithColor: [UIColor purpleColor]];
+    if (indexPath.item - 1 > 0) {
+        JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
+        if ([[previousMessage senderId] isEqualToString:[currentMessage senderId]]) {
+            return 0.0f;
+        }
+    }
+    return topLabelHeight;
 }
+
+#pragma mark - Override super methods
 
 - (void)didPressSendButton:(UIButton *)button
            withMessageText:(NSString *)text
                   senderId:(NSString *)senderId
          senderDisplayName:(NSString *)senderDisplayName
-                      date:(NSDate *)date
-{
-    /**
-     *  Sending a message. Your implementation of this method should do *at least* the following:
-     *
-     *  1. Play sound (optional)
-     *  2. Add new id<JSQMessageData> object to your data source
-     *  3. Call `finishSendingMessage`
-     */
+                      date:(NSDate *)date {
+
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
     QBChatMessage* message = [QBChatMessage message];
@@ -204,8 +221,8 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"save_to_history"] = @YES;
+    params[kDisplayedName] = senderDisplayName;
     [message setCustomParameters:params];
-    
     
     MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated: YES];
     hud.labelText = @"Sending...";
@@ -222,8 +239,7 @@
 
 }
 
-- (void)didPressAccessoryButton:(UIButton *)sender
-{
+- (void)didPressAccessoryButton:(UIButton *)sender{
     [self.inputToolbar.contentView.textView resignFirstResponder];
     
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Media messages"
@@ -236,6 +252,38 @@
 }
 
 #pragma mark - JSQMessages CollectionView DataSource
+
+- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
+             messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    
+    if ([message.senderId isEqualToString:self.senderId]) {
+        return [self.bubleFactory outgoingMessagesBubbleImageWithColor: [UIColor lightGrayColor]];
+    }
+    return [self.bubleFactory incomingMessagesBubbleImageWithColor: [UIColor purpleColor]];
+}
+
+
+- (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
+                    avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath{
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    return [self.avatars objectForKey:message.senderId];
+}
+
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView
+attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath{
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    if ([message.senderId isEqualToString:self.senderId]) {
+        return nil;
+    }
+    if (indexPath.item - 1 > 0) {
+        JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
+        if ([[previousMessage senderId] isEqualToString:message.senderId]) {
+            return nil;
+        }
+    }
+    return [[NSAttributedString alloc] initWithString:message.senderDisplayName];
+}
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -250,6 +298,41 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return [self.messages count];
+}
+
+#pragma mark - Drawings
+
+- (UIImage*) circularImageFromImage: (UIImage*) image {
+    return [[self class] circularImage: image withDiameter: 20.0 highlightedColor: nil];
+}
+
++ (UIImage *)circularImage:(UIImage *)image withDiameter:(NSUInteger)diameter highlightedColor:(UIColor *)highlightedColor
+{
+    NSParameterAssert(image != nil);
+    NSParameterAssert(diameter > 0);
+    
+    CGRect frame = CGRectMake(0.0f, 0.0f, diameter, diameter);
+    UIImage *newImage = nil;
+    
+    UIGraphicsBeginImageContextWithOptions(frame.size, NO, [UIScreen mainScreen].scale);
+    {
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        
+        UIBezierPath *imgPath = [UIBezierPath bezierPathWithOvalInRect:frame];
+        [imgPath addClip];
+        [image drawInRect:frame];
+        
+        if (highlightedColor != nil) {
+            CGContextSetFillColorWithColor(context, highlightedColor.CGColor);
+            CGContextFillEllipseInRect(context, frame);
+        }
+        
+        newImage = UIGraphicsGetImageFromCurrentImageContext();
+        
+    }
+    UIGraphicsEndImageContext();
+    
+    return newImage;
 }
 
 

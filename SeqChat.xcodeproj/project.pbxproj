@@ -20,6 +20,11 @@
 		08E1B0E31C29268400C73CED /* NSArray+HOM.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E1B0E21C29268400C73CED /* NSArray+HOM.m */; };
 		08E1B0E61C293AD700C73CED /* QBChatMessage+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E1B0E51C293AD700C73CED /* QBChatMessage+Extended.m */; };
 		08E1B0E91C293C0700C73CED /* QBUUser+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E1B0E81C293C0700C73CED /* QBUUser+Extended.m */; };
+		08E1B0EE1C2A68B800C73CED /* close_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E1B0ED1C2A68B800C73CED /* close_btn@2x.png */; };
+		08E1B0F01C2A6D1F00C73CED /* bg_pattern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E1B0EF1C2A6D1F00C73CED /* bg_pattern@2x.png */; };
+		08E1B0F21C2A713F00C73CED /* close40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E1B0F11C2A713F00C73CED /* close40@2x.png */; };
+		08E1B0F41C2A7EB600C73CED /* nick.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08E1B0F31C2A7EB600C73CED /* nick.gif */; };
+		08E1B0F61C2A7EC200C73CED /* denis.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08E1B0F51C2A7EC200C73CED /* denis.gif */; };
 		DEB349D4818B79B56180E83A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E04307D8A3F24F89939794 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +52,11 @@
 		08E1B0E71C293C0700C73CED /* QBUUser+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QBUUser+Extended.h"; sourceTree = "<group>"; };
 		08E1B0E81C293C0700C73CED /* QBUUser+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QBUUser+Extended.m"; sourceTree = "<group>"; };
 		08E1B0EA1C293C1C00C73CED /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Categories.h; sourceTree = "<group>"; };
+		08E1B0ED1C2A68B800C73CED /* close_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close_btn@2x.png"; sourceTree = "<group>"; };
+		08E1B0EF1C2A6D1F00C73CED /* bg_pattern@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_pattern@2x.png"; sourceTree = "<group>"; };
+		08E1B0F11C2A713F00C73CED /* close40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close40@2x.png"; sourceTree = "<group>"; };
+		08E1B0F31C2A7EB600C73CED /* nick.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nick.gif; sourceTree = "<group>"; };
+		08E1B0F51C2A7EC200C73CED /* denis.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = denis.gif; sourceTree = "<group>"; };
 		AFAB1D136A11F81084882341 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C15E8A7E19EB03B3E5D88820 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D1E04307D8A3F24F89939794 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +125,11 @@
 		083DB1171C27B5510043B214 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				08E1B0F51C2A7EC200C73CED /* denis.gif */,
+				08E1B0F31C2A7EB600C73CED /* nick.gif */,
+				08E1B0F11C2A713F00C73CED /* close40@2x.png */,
+				08E1B0EF1C2A6D1F00C73CED /* bg_pattern@2x.png */,
+				08E1B0ED1C2A68B800C73CED /* close_btn@2x.png */,
 				083DB11A1C27B6660043B214 /* LOGO_sequenia@2x.png */,
 				083DB11B1C27B6660043B214 /* sequenia_logo@2x.png */,
 			);
@@ -252,10 +267,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08E1B0F21C2A713F00C73CED /* close40@2x.png in Resources */,
+				08E1B0EE1C2A68B800C73CED /* close_btn@2x.png in Resources */,
 				083DB10F1C27AFC30043B214 /* LaunchScreen.storyboard in Resources */,
 				083DB10C1C27AFC30043B214 /* Assets.xcassets in Resources */,
 				083DB11D1C27B6660043B214 /* sequenia_logo@2x.png in Resources */,
 				083DB10A1C27AFC20043B214 /* Main.storyboard in Resources */,
+				08E1B0F61C2A7EC200C73CED /* denis.gif in Resources */,
+				08E1B0F01C2A6D1F00C73CED /* bg_pattern@2x.png in Resources */,
+				08E1B0F41C2A7EB600C73CED /* nick.gif in Resources */,
 				083DB11C1C27B6660043B214 /* LOGO_sequenia@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
