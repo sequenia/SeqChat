@@ -68,11 +68,6 @@ CGFloat const topLabelHeight = 20.0;
     [[QBChat instance] removeDelegate: self];
 }
 
-- (void) dealloc {
-    
-    [[NSNotificationCenter defaultCenter] removeObserver: self];
-}
-
 #pragma mark - Preparation
 
 - (void) setupAvatars {
